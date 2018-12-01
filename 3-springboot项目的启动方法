@@ -1,0 +1,17 @@
+   参考官方文档,很简单,写的也很清晰. 看19.2和19.3
+   https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/html/using-boot-running-your-application.html
+
+   springboot,springcloud的官方文档特别好.目录很清晰,很多问题只要去文档中搜索关键词就能找到相关主题.
+
+1. eclipse中启动.
+2. 用maven打好包,然后用java -jar 运行,线上发布一般都是这种方式.通过jenkins或者本地打好jar包,上传到服务器,命令行启动.
+   >: mvn package
+
+   >: java -jar target/boot-learn-0.0.1-SNAPSHOT.jar
+   使用profile,下面两种方式都可以传递参数.
+   >: java -jar target/boot-learn-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
+   >: java -Dspring.profiles.active=dev -jar target/boot-learn-0.0.1-SNAPSHOT.jar
+3. 直接使用  spring-boot-maven-plugin 插件的功能. 这个插件你到pom文件中看一下,有相关配置的.
+   >: mvn spring-boot:run
+   如果要传递命令行参数,
+   >: mvn -Dspring.profiles.active spring-boot:run
