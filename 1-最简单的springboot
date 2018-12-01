@@ -1,0 +1,60 @@
+1. pom文件继承自spring-boot-starter-parent
+    这个parent文件提供了springboot依赖的管理信息,但是他并没有为项目引入任何依赖.
+    也就是说当你确定了parent的版本,
+    当你在项目中依赖具体的spring-boot-start-xxx时,不在需要指定版本,parent中已经管理好了.
+2. 在pom文件中引入spring-boot-starter-web.
+    所有的spring-boot-starter-xxxx,可以理解为spring为了方便提供的打包文件.
+    比方spring-boot-starter-web-2.0.6.RELEASE这个jar包中,没有任何class文件.
+    他的作用是引入web项目需要的相关依赖,
+    我们启动web项目只需要配置一个依赖,他就把所有需要的依赖都引入进来了,而不需要去配置每一个具体的依赖.
+    命令行运行:
+    > mvn dependency:tree
+    可以看到引入的依赖jar包.
+3. 写一个springboot启动类.这样项目就可以跑起来了.
+    注意所有的springboot项目启动类,都有
+    @SpringBootApplication
+    注解
+4. 写一个controller. 延后启动main方法,springboot内置了tomcat容器,不需要到容器中启动.
+    启动项目,访问
+    http://localhost:8080/
+
+注意springboot默认的properties文件.这里什么都没有配置.
+    application.properties
+
+
+启动项目时观察一下控制台输出.每一条信息都非常重要.一定认真看下.
+
+>线程id,
+: Starting BootLearnApplication on countimedeMacBook-Pro.local with PID 19053 (/Users/countime/IdeaProjects/learn/boot-learn/target/classes started by countime in /Users/countime/IdeaProjects/learn/boot-learn)
+>profile, 很重要.
+: No active profile set, falling back to default profiles: default
+
+: Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@1460a8c0: startup date [Sat Dec 01 22:35:04 CST 2018]; root of context hierarchy
+>tomcat监听端口,内置tomcat版本,
+: Tomcat initialized with port(s): 8080 (http)
+: Starting service [Tomcat]
+: Starting Servlet Engine: Apache Tomcat/8.5.34
+: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/countime/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+: Initializing Spring embedded WebApplicationContext
+: Root WebApplicationContext: initialization completed in 788 ms
+
+>dispatcherServlet,springmvc的核心,所有的http请求都是由 dispatcherServlet 处理的.可以百度下.
+: Servlet dispatcherServlet mapped to [/]
+
+>内置过滤器: 比方第一个是编码过滤器
+: Mapping filter: 'characterEncodingFilter' to: [/*]
+: Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+: Mapping filter: 'httpPutFormContentFilter' to: [/*]
+: Mapping filter: 'requestContextFilter' to: [/*]
+: Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+: Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@1460a8c0: startup date [Sat Dec 01 22:35:04 CST 2018]; root of context hierarchy
+
+>url映射到哪一个方法,这些都是由dispatcherServlet管理的,下面第一条是自己写的.
+: Mapped "{[/]}" onto public java.lang.String com.countime.bootlearn.HelloWordController.FirstController.hello()
+: Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+: Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+: Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+: Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+: Registering beans for JMX exposure on startup
+: Tomcat started on port(s): 8080 (http) with context path ''
+ Started BootLearnApplication in 1.605 seconds (JVM running for 2.395)
