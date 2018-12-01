@@ -1,0 +1,11 @@
+1. application-dev.properties 文件就是 dev 这个 profile使用的配置文件.
+2. 当启动项目时指定jvm参数 -Dspring.profiles.active=dev.
+	eclipse中配置环境变量的方式见 docs/2-1.jpg
+    可以在控制台看到
+     : The following profiles are active: dev.
+3.  访问  http://localhost:8080/profiletest
+    可以看到 test.key1 同时在application.properties和  application-dev.properties中配置后.
+    test.key2 只在默认配置文件中配置,也能获取到值.
+
+    说明 spring会同时加载默认的具体profile这两个配置文件,当key重复时,会使用具体profile中的值.
+    也就是当指定profile=dev时,application-dev.properties 会覆盖 application.properties文件
