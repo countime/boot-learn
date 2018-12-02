@@ -1,0 +1,32 @@
+redistemplate的使用和jdbctemplate一样的.
+
+1. 引入jar包: spring-boot-starter-data-redis
+使用maven命令行可以查看这个starter引入的相关依赖:
+ > mvn dependency:tree
+ 可以看到下面的依赖传递关系.
+ 50 [INFO] \- org.springframework.boot:spring-boot-starter-data-redis:jar:2.0.6.RELEASE:compile
+ 51 [INFO]    +- org.springframework.data:spring-data-redis:jar:2.0.11.RELEASE:compile
+ 52 [INFO]    |  +- org.springframework.data:spring-data-keyvalue:jar:2.0.11.RELEASE:compile
+ 53 [INFO]    |  |  \- org.springframework.data:spring-data-commons:jar:2.0.11.RELEASE:compile
+ 54 [INFO]    |  +- org.springframework:spring-oxm:jar:5.0.10.RELEASE:compile
+ 55 [INFO]    |  \- org.springframework:spring-context-support:jar:5.0.10.RELEASE:compile
+ 56 [INFO]    \- io.lettuce:lettuce-core:jar:5.0.5.RELEASE:compile
+ 57 [INFO]       +- io.projectreactor:reactor-core:jar:3.1.10.RELEASE:compile
+ 58 [INFO]       |  \- org.reactivestreams:reactive-streams:jar:1.0.2:compile
+ 59 [INFO]       +- io.netty:netty-common:jar:4.1.29.Final:compile
+ 60 [INFO]       +- io.netty:netty-transport:jar:4.1.29.Final:compile
+ 61 [INFO]       |  +- io.netty:netty-buffer:jar:4.1.29.Final:compile
+ 62 [INFO]       |  \- io.netty:netty-resolver:jar:4.1.29.Final:compile
+ 63 [INFO]       \- io.netty:netty-handler:jar:4.1.29.Final:compile
+ 64 [INFO]          \- io.netty:netty-codec:jar:4.1.29.Final:compile
+
+2. 和jdbcTemplate一样,引入jar包后,spring会自动配置 StringRedisTemplate 这个bean.
+    连接池都会自动配置.
+   我们就可以直接使用了.
+
+3. 同样需要在application.properties中配置redis的连接参数.
+    注意redis可能有密码,可能没有密码,是由redis服务启动的方式决定的.
+
+3. 代码在RedisController中.
+    http://localhost:8080/redistest/set
+    http://localhost:8080/redistest/get
