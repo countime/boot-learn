@@ -1,0 +1,44 @@
+JdbcTemplate是spring自己提供的一个很轻量的jdbc操作,
+    可以理解为和第三方提供的mybais/hibernate差不多,都是提供数据库持久化操作.
+
+1. 引入jar包: spring-boot-starter-jdbc
+    这个jar也是一个starter jar包,里面没有class,只是把相关依赖的jar包传递进来.
+    引入后就有了
+    spring-tx(事物管理),spring-jdbc,HikariCP(spring默认选择的数据库连接池,性能比dbcp这些传统连接池更好)
+    这些数据库操作的核心jar包.
+
+    ps: 一定要理解所有的starter的jar包都是为了方便,将多个依赖捆绑到一起,方便我们使用.
+2. 引入:mysql-connector-java
+    spring没法知道我们要用那个数据库,所以要我们自己选择
+    mysql驱动包也可以不写版本,应为spring-boot-parent已经管理好了.
+    我们引入这个jar包,他会选择合适的版本.
+
+3. 引入这两个jar包后,springboot就会自动配置jdbctemplate,我们可以直接使用,不需要手动配置bean.
+
+PS: springboot之所以能够省去很多配置文件,就是基于约定大于配置的原则,项目中的各个功能模块都有默认自动配置.
+    比方说数据库,当你引入了数据库操作的jar包,他就会自动帮我们配置:
+        连接池,jdbcTemplate等bean对象.
+
+    这是springboot的核心,约定大于配置,省了很多事情,
+    如果只使用spring,我们要自己配置 连接池,事物管理器,jdbctemplate这些对象
+
+4. 在application.properties中配置数据库链接参数.
+
+    这是测试用的表.你手动创建一下:
+
+    CREATE TABLE `mh_user` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `name` varchar(45) DEFAULT NULL,
+      `age` int(11) DEFAULT NULL,
+      `created` timestamp NULL DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+5. 直接注入jdbctemplate,操作数据库. 代码都在jdbcController中.
+    jdbctemplate的语法不是重点,关键是理解springboot是如何配置数据库访问的.
+
+    http://localhost:8080/jdbctest/insert
+    http://localhost:8080/jdbctest/select
+
+    直接在controller中使用了数据库操作,这个在本质上和service层操作是没有任何区别的.

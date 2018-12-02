@@ -32,6 +32,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <!--注意这里可以不写版本号的原因-->
         </dependency>
+
+        <!--jdbc相关jar包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
