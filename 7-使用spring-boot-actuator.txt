@@ -1,0 +1,50 @@
+官方文档.
+https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/htmlsingle/#production-ready
+
+actuator 单词含义: n. 执行机构；激励者；促动器.
+这个springboot组件 是用来监控和管理springboot项目的. 可以说是为了spring cloud打基础的,
+比方说健康检查,服务发现.
+
+1.引入 spring-boot-starter-actuator引入后springboot就自动开启了很多Endpoints.
+2.默认spring boot开启了很多监控功能(Endpoints),但不会用http形式的接口暴露出来,所以需要手动开启.
+    management.endpoints.web.exposure.include=*
+    使用上面的配置,可以暴露(exposure)所有开启的Endpoints.
+
+3.启动项目就可以访问所有actuator的接口了.
+  控制台会打印相关的接口.
+: Mapped "{[/actuator/auditevents],methods=[GET]
+: Mapped "{[/actuator/beans],methods=[GET]
+: Mapped "{[/actuator/health],methods=[GET]
+: Mapped "{[/actuator/conditions],methods=[GET]
+: Mapped "{[/actuator/configprops],methods=[GET]
+: Mapped "{[/actuator/env],methods=[GET]
+: Mapped "{[/actuator/env/{toMatch}],methods=[GET]
+: Mapped "{[/actuator/info],methods=[GET]
+: Mapped "{[/actuator/loggers/{name}],methods=[GET]
+: Mapped "{[/actuator/loggers/{name}],methods=[POST]
+: Mapped "{[/actuator/loggers],methods=[GET]
+: Mapped "{[/actuator/heapdump],methods=[GET]
+: Mapped "{[/actuator/threaddump],methods=[GET]
+: Mapped "{[/actuator/metrics],methods=[GET]
+: Mapped "{[/actuator/metrics/{requiredMetricName}],methods=[GET]
+: Mapped "{[/actuator/scheduledtasks],methods=[GET]
+: Mapped "{[/actuator/httptrace],methods=[GET]
+: Mapped "{[/actuator/mappings],methods=[GET]
+: Mapped "{[/actuator],methods=[GET]
+
+其中相当重要的:
+    beans:  打印spring 容器中所有注册的bean和bean的依赖关系. 是理解spring很好的工具,
+    而且可以知道spring boot,自动配置了哪些bean.非常好用
+
+    health,info: 健康检查,服务信息.  springcloud项目服务注册,服务发现,负载均衡,都会依赖这些信息,当然还有别的信息.
+        这些信息是可以自定义开发配置的.是springcloud的基础.
+
+    env: 可以看到active profiles, 如果项目启动有疑问,不确定启动参数是什么,就可以访问这个地址确认.
+
+        http://l:8080/actuator/health
+
+4. 这个步骤和actuator无关.只是为了调整spring默认的序列化(springboot 默认使用jackson对Controller返回的对象
+    进行json序列化)参数,对返回的json格式化.
+    文档: https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/htmlsingle/#boot-features-json
+
+    spring.jackson.serialization.indent_output=true
